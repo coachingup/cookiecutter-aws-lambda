@@ -3,5 +3,6 @@
     "event_name": "Howdy",
     "event_path": "/howdy",
     "aws_stack_name": "lambda_function_name",
-    "aws_region": "us-east-2"
+    "aws_region": "us-east-2",
+    "version": "0.0.1"
 }
