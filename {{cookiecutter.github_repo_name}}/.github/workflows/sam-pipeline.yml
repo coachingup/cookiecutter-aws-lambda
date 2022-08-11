@@ -1,25 +1,25 @@
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - uses: aws-actions/setup-sam@v1
       - uses: aws-actions/configure-aws-credentials@v1
         with:
 {% raw %}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 {% endraw %}
-          aws-region: ##region##
+          aws-region: us-east-2
+      - uses: actions/setup-python@v2
+      - uses: aws-actions/setup-sam@v1
+
       # sam build
       - run: sam build --use-container
 
 # Run Unit tests- Specify unit tests here
 
 # sam deploy
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name {{cookiecutter.aws_stack_name}} --s3-bucket bu-prex-lambda --capabilities CAPABILITY_IAM --region {{cookiecutter.aws_region}}
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name {{cookiecutter.aws_stack_name}} --s3-bucket coachingup-prex-lambda --capabilities CAPABILITY_IAM --region {{cookiecutter.aws_region}}

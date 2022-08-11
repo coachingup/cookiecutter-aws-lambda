@@ -12,9 +12,10 @@ Globals:
     Tracing: Active
 
 Resources:
-  HelloWorldFunction:
+  {{cookiecutter.event_name}}Function:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
+      Role: "arn:aws:iam::270286309069:role/lambda_basic_execution"
       CodeUri: src/
       Handler: app.lambda_handler
       Runtime: python3.8
@@ -31,12 +32,9 @@ Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  {{cookiecutter.event_name}}Api:
+    Description: "API Gateway endpoint URL for Prod stage for {{cookiecutter.event_name}} function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/{{cookiecutter.event_path}}/"
+  {{cookiecutter.event_name}}Function:
+    Description: "{{cookiecutter.event_name}} Lambda Function ARN"
+    Value: !GetAtt {{cookiecutter.event_name}}Function.Arn
